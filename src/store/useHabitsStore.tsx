@@ -27,7 +27,7 @@ import { checkBadgeUnlocks, createBadge } from '../utils/badgeUtils';
 export interface HabitsState {
   habits: Habit[];
   logs: Record<string, Record<string, boolean>>; // { habitId: { dateKey: completed } }
-  theme: 'light' | 'dark';
+  theme: 'light' | 'dark' | 'ocean';
   unlockedBadges: Badge[];
   isLoading: boolean;
 }
@@ -41,7 +41,7 @@ type HabitsAction =
   | { type: 'EDIT_HABIT'; payload: { id: string; updates: Partial<Habit> } }
   | { type: 'DELETE_HABIT'; payload: string }
   | { type: 'TOGGLE_HABIT_DATE'; payload: { habitId: string; date: string } }
-  | { type: 'SET_THEME'; payload: 'light' | 'dark' }
+  | { type: 'SET_THEME'; payload: 'light' | 'dark' | 'ocean' }
   | { type: 'UNLOCK_BADGES'; payload: Badge[] };
 
 // ==================== Reducer ====================
@@ -128,7 +128,7 @@ interface HabitsContextValue {
     deleteHabit: (id: string) => void;
     toggleHabitDate: (habitId: string, date: string) => void;
     checkInHabit: (habitId: string, date: string) => void;
-    setTheme: (theme: 'light' | 'dark') => void;
+    setTheme: (theme: 'light' | 'dark' | 'ocean') => void;
   };
   helpers: {
     isHabitCompletedOnDate: (habitId: string, date: string) => boolean;
@@ -275,7 +275,7 @@ export const HabitsProvider = ({ children }: HabitsProviderProps) => {
       dispatch({ type: 'TOGGLE_HABIT_DATE', payload: { habitId, date } });
     },
 
-    setTheme: (theme: 'light' | 'dark') => {
+    setTheme: (theme: 'light' | 'dark' | 'ocean') => {
       dispatch({ type: 'SET_THEME', payload: theme });
     },
   };

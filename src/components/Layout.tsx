@@ -13,13 +13,24 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
 
-  // Apply dark mode class to html element
+  // Apply theme via data-theme attribute on html element
   useEffect(() => {
+    // Remove no-transition class after initial load
+    const timer = setTimeout(() => {
+      document.documentElement.classList.remove('no-transition');
+    }, 100);
+
+    // Set data-theme attribute
+    document.documentElement.setAttribute('data-theme', theme);
+    
+    // Also apply dark class for Tailwind dark mode compatibility
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    return () => clearTimeout(timer);
   }, [theme]);
 
   return (

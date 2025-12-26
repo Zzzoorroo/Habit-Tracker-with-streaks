@@ -61,7 +61,7 @@ export interface Badge {
  * User settings and preferences
  */
 export interface Settings {
-  theme: 'light' | 'dark';
+  theme: 'light' | 'dark' | 'ocean';
   weekStartsOn: 0 | 1 | 6; // 0 = Sunday, 1 = Monday, 6 = Saturday
   notifications: boolean;
   firstDayOfWeek?: 0 | 1 | 6; // Deprecated in favor of weekStartsOn
