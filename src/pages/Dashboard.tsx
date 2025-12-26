@@ -3,11 +3,15 @@ import { type FC } from 'react';
 import { useHabitsStore } from '../store/useHabitsStore';
 import { getTodayKey, formatShortDate, calculateStreak } from '../utils/dateUtils';
 import BadgeGallery from '../components/BadgeGallery';
+import { useBadgeNotifications } from '../hooks/useBadgeNotifications';
 
 const Dashboard: FC = () => {
   const { state, actions, helpers } = useHabitsStore();
   const todayKey = getTodayKey();
   const todayDate = new Date();
+
+  // Show toast notifications when badges are unlocked
+  useBadgeNotifications(state.unlockedBadges);
 
   // Filter non-archived habits
   const activeHabits = state.habits.filter((h) => !h.archived);
