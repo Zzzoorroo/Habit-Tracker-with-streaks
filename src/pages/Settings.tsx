@@ -23,7 +23,7 @@ const Settings: FC = () => {
           button.textContent = 'Export Data';
         }, 2000);
       }
-    } catch (error) {
+    } catch {
       alert('Failed to export data. Please try again.');
     }
   };

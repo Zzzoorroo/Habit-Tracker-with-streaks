@@ -69,8 +69,8 @@ export const calculateStreaks = (
   
   // Extract completed date keys (where value is true)
   const completedDateKeys = Object.entries(habitLogs)
-    .filter(([_, completed]) => completed)
-    .map(([dateKey, _]) => dateKey)
+    .filter(([, completed]) => completed)
+    .map(([dateKey]) => dateKey)
     .sort(); // Sort in ascending order
   
   if (completedDateKeys.length === 0) {

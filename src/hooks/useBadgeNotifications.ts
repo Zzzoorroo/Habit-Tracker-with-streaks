@@ -3,6 +3,9 @@ import { useEffect, useRef } from 'react';
 import { useToast } from '../components/ToastContext';
 import { type Badge } from '../store/types';
 
+// Delay between multiple toast notifications (in milliseconds)
+const TOAST_STAGGER_DELAY_MS = 300;
+
 /**
  * Hook that monitors badge changes and shows toast notifications for new unlocks
  */
@@ -30,7 +33,7 @@ export const useBadgeNotifications = (unlockedBadges: Badge[]): void => {
               duration: 5000,
             }
           );
-        }, index * 300);
+        }, index * TOAST_STAGGER_DELAY_MS);
       });
     }
 

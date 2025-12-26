@@ -1,4 +1,5 @@
 // Toast Context for managing toast notifications
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useCallback, type ReactNode, type FC } from 'react';
 import Toast, { type ToastProps } from './Toast';
 
@@ -24,7 +25,8 @@ export const ToastProvider: FC<ToastProviderProps> = ({ children }) => {
   const [toasts, setToasts] = useState<Array<ToastProps & { id: string }>>([]);
 
   const showToast = useCallback((message: string, options?: Partial<ToastProps>) => {
-    const id = Math.random().toString(36).substring(7);
+    // Use crypto.randomUUID for better ID uniqueness
+    const id = crypto.randomUUID();
     const newToast = {
       id,
       message,
