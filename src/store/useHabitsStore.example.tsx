@@ -1,6 +1,6 @@
 // Example usage of useHabitsStore
 import { type FC } from 'react';
-import { HabitsProvider, useHabitsStore, useHabits, useTheme } from '../store/useHabitsStore';
+import { HabitsProvider, useHabitsStore, useHabits, useTheme } from './useHabitsStore';
 import { toDateKey } from '../utils/dateUtils';
 import { calculateStreak } from '../utils/dateUtils';
 
