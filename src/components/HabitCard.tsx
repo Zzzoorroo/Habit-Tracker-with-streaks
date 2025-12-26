@@ -11,8 +11,12 @@ interface HabitCardProps {
 }
 
 const HabitCard: FC<HabitCardProps> = ({ name, color, streak, onToggle, isCompleted }) => {
+  // Note: Dynamic color classes require safelist in tailwind.config.js
+  // For production, use a predefined set of colors or add to safelist
+  const borderColorClass = `border-${color}-500`;
+  
   return (
-    <div className={clsx('p-4 rounded-lg shadow-md border-2', `border-${color}-500`)}>
+    <div className={clsx('p-4 rounded-lg shadow-md border-2', borderColorClass)}>
       <h3 className="text-xl font-semibold mb-2">{name}</h3>
       <p className="text-sm text-gray-600 mb-3">Streak: {streak} days</p>
       <button
