@@ -23,8 +23,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     // Set data-theme attribute
     document.documentElement.setAttribute('data-theme', theme);
     
-    // Also apply dark class for Tailwind dark mode compatibility
-    if (theme === 'dark') {
+    // Apply dark class for Tailwind dark mode compatibility
+    // Ocean theme also uses dark mode since it has a dark background
+    if (theme === 'dark' || theme === 'ocean') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
