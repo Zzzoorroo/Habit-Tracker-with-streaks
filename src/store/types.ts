@@ -35,6 +35,8 @@ export interface HabitLog {
  */
 export type BadgeType = 
   | 'first_habit'       // Created first habit
+  | 'first_checkin'     // First check-in (any habit completed once)
+  | 'perfect_day'       // All habits completed in a single day
   | 'streak_3'          // 3-day streak
   | 'streak_7'          // 7-day streak
   | 'streak_30'         // 30-day streak
@@ -43,7 +45,7 @@ export type BadgeType =
   | 'perfect_month'     // All habits completed for 30 days
   | 'early_bird'        // 5 completions before 8 AM
   | 'night_owl'         // 5 completions after 10 PM
-  | 'consistency_king'  // No missed days for 30 days
+  | 'consistency_king'  // Check in 20 total days across any habits
   | 'habit_master';     // 10 active habits
 
 /**

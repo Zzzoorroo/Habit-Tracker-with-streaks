@@ -12,6 +12,18 @@ export const BADGE_DEFINITIONS: Record<BadgeType, Omit<Badge, 'unlockedAt'>> = {
     description: 'Created your first habit',
     icon: '🌱',
   },
+  first_checkin: {
+    type: 'first_checkin',
+    name: 'First Steps',
+    description: 'Completed your first check-in',
+    icon: '✅',
+  },
+  perfect_day: {
+    type: 'perfect_day',
+    name: 'Perfect Day',
+    description: 'Completed all habits in a single day',
+    icon: '💎',
+  },
   streak_3: {
     type: 'streak_3',
     name: '3-Day Streak',
@@ -63,7 +75,7 @@ export const BADGE_DEFINITIONS: Record<BadgeType, Omit<Badge, 'unlockedAt'>> = {
   consistency_king: {
     type: 'consistency_king',
     name: 'Consistency King',
-    description: 'No missed days for any habit in 30 days',
+    description: 'Check in 20 total days across any habits',
     icon: '🎯',
   },
   habit_master: {
@@ -72,6 +84,42 @@ export const BADGE_DEFINITIONS: Record<BadgeType, Omit<Badge, 'unlockedAt'>> = {
     description: 'Maintained 10 active habits',
     icon: '🧙‍♂️',
   },
+};
+
+/**
+ * Check if "First Check-in" badge should be unlocked
+ */
+const checkFirstCheckin = (logs: HabitLog[]): boolean => {
+  return logs.some(log => log.completed);
+};
+
+/**
+ * Check if all habits were completed on any single day
+ */
+const checkPerfectDay = (habits: Habit[], logs: HabitLog[]): boolean => {
+  if (habits.length === 0) return false;
+  
+  const activeHabits = habits.filter(h => !h.archived);
+  if (activeHabits.length === 0) return false;
+  
+  // Group logs by date
+  const logsByDate: Record<string, Set<string>> = {};
+  logs.filter(log => log.completed).forEach(log => {
+    if (!logsByDate[log.date]) {
+      logsByDate[log.date] = new Set();
+    }
+    logsByDate[log.date].add(log.habitId);
+  });
+  
+  // Check if any date has all active habits completed
+  for (const habitIds of Object.values(logsByDate)) {
+    const allCompleted = activeHabits.every(habit => habitIds.has(habit.id));
+    if (allCompleted) {
+      return true;
+    }
+  }
+  
+  return false;
 };
 
 /**
@@ -160,49 +208,14 @@ const checkNightOwl = (logs: HabitLog[]): boolean => {
 };
 
 /**
- * Check if user has no missed days for 30 days
+ * Check if user has checked in 20 total days across any habits
  */
-const checkConsistencyKing = (habits: Habit[], logs: HabitLog[]): boolean => {
-  if (habits.length === 0) return false;
-
-  const last30Days = getLastNDays(30);
-  const activeHabits = habits.filter(h => !h.archived);
-  
-  // For each active habit, check if all 30 days are logged
-  for (const habit of activeHabits) {
-    const habitLogs = new Set(
-      logs
-        .filter(log => log.habitId === habit.id && log.completed)
-        .map(log => log.date)
-    );
-    
-    // Check if habit was created before the 30-day window
-    const habitCreatedDate = new Date(habit.createdAt);
-    const oldestDateInWindow = new Date(last30Days[last30Days.length - 1]);
-    
-    if (habitCreatedDate > oldestDateInWindow) {
-      // Habit is too new, check only from creation date
-      const relevantDays = last30Days.filter(day => {
-        const dayDate = new Date(day);
-        return dayDate >= habitCreatedDate;
-      });
-      
-      for (const day of relevantDays) {
-        if (!habitLogs.has(day)) {
-          return false;
-        }
-      }
-    } else {
-      // Habit existed for full window
-      for (const day of last30Days) {
-        if (!habitLogs.has(day)) {
-          return false;
-        }
-      }
-    }
-  }
-  
-  return true;
+const checkConsistencyKing = (logs: HabitLog[]): boolean => {
+  // Count unique dates with at least one completed habit
+  const uniqueDates = new Set(
+    logs.filter(log => log.completed).map(log => log.date)
+  );
+  return uniqueDates.size >= 20;
 };
 
 /**
@@ -238,6 +251,8 @@ export const checkBadgeUnlocks = (
 
   // Check all badge conditions
   checkAndAdd('first_habit', checkFirstHabit(habits));
+  checkAndAdd('first_checkin', checkFirstCheckin(logs));
+  checkAndAdd('perfect_day', checkPerfectDay(habits, logs));
   checkAndAdd('streak_3', checkStreakBadge(habits, logs, 3));
   checkAndAdd('streak_7', checkStreakBadge(habits, logs, 7));
   checkAndAdd('streak_30', checkStreakBadge(habits, logs, 30));
@@ -246,7 +261,7 @@ export const checkBadgeUnlocks = (
   checkAndAdd('perfect_month', checkPerfectStreak(habits, logs, 30));
   checkAndAdd('early_bird', checkEarlyBird(logs));
   checkAndAdd('night_owl', checkNightOwl(logs));
-  checkAndAdd('consistency_king', checkConsistencyKing(habits, logs));
+  checkAndAdd('consistency_king', checkConsistencyKing(logs));
   checkAndAdd('habit_master', checkHabitMaster(habits));
 
   return newlyUnlocked;

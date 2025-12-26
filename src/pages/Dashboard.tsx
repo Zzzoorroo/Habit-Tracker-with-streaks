@@ -2,6 +2,7 @@
 import { type FC } from 'react';
 import { useHabitsStore } from '../store/useHabitsStore';
 import { getTodayKey, formatShortDate, calculateStreak } from '../utils/dateUtils';
+import BadgeGallery from '../components/BadgeGallery';
 
 const Dashboard: FC = () => {
   const { state, actions, helpers } = useHabitsStore();
@@ -70,79 +71,86 @@ const Dashboard: FC = () => {
           </a>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {activeHabits.map((habit) => {
-            const completedDates = helpers.getHabitCompletedDates(habit.id);
-            const currentStreak = calculateStreak(completedDates);
-            const isCompletedToday = helpers.isHabitCompletedOnDate(habit.id, todayKey);
+        <>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-12">
+            {activeHabits.map((habit) => {
+              const completedDates = helpers.getHabitCompletedDates(habit.id);
+              const currentStreak = calculateStreak(completedDates);
+              const isCompletedToday = helpers.isHabitCompletedOnDate(habit.id, todayKey);
 
-            return (
-              <div
-                key={habit.id}
-                className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
-              >
-                {/* Habit name with color indicator */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3 flex-1">
-                    <div
-                      className={`w-4 h-4 rounded border-2 border-${habit.color}-500 flex-shrink-0`}
-                      style={{ backgroundColor: `var(--color-${habit.color}-500, #3b82f6)` }}
-                      aria-label={`${habit.color} color indicator`}
-                    />
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                      {habit.name}
-                    </h3>
-                  </div>
-                </div>
-
-                {/* Streak display */}
-                <div className="mb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="text-2xl">🔥</span>
-                    <div>
-                      <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                        {currentStreak}
-                      </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">day streak</p>
+              return (
+                <div
+                  key={habit.id}
+                  className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-shadow"
+                >
+                  {/* Habit name with color indicator */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3 flex-1">
+                      <div
+                        className={`w-4 h-4 rounded border-2 border-${habit.color}-500 flex-shrink-0`}
+                        style={{ backgroundColor: `var(--color-${habit.color}-500, #3b82f6)` }}
+                        aria-label={`${habit.color} color indicator`}
+                      />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                        {habit.name}
+                      </h3>
                     </div>
                   </div>
-                </div>
 
-                {/* Check-in button */}
-                <button
-                  onClick={() => handleToggleCheckIn(habit.id)}
-                  className={`w-full py-3 px-4 rounded-lg font-medium transition-all ${
-                    isCompletedToday
-                      ? 'bg-green-600 hover:bg-green-700 text-white'
-                      : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'
-                  }`}
-                  aria-label={isCompletedToday ? 'Mark as incomplete' : 'Check in for today'}
-                >
-                  {isCompletedToday ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      Completed Today
-                    </span>
-                  ) : (
-                    'Check In'
-                  )}
-                </button>
-              </div>
-            );
-          })}
-        </div>
+                  {/* Streak display */}
+                  <div className="mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">🔥</span>
+                      <div>
+                        <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                          {currentStreak}
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">day streak</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Check-in button */}
+                  <button
+                    onClick={() => handleToggleCheckIn(habit.id)}
+                    className={`w-full py-3 px-4 rounded-lg font-medium transition-all ${
+                      isCompletedToday
+                        ? 'bg-green-600 hover:bg-green-700 text-white'
+                        : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'
+                    }`}
+                    aria-label={isCompletedToday ? 'Mark as incomplete' : 'Check in for today'}
+                  >
+                    {isCompletedToday ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        Completed Today
+                      </span>
+                    ) : (
+                      'Check In'
+                    )}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Badges Section */}
+          <div className="mt-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+            <BadgeGallery unlockedBadges={state.unlockedBadges} />
+          </div>
+        </>
       )}
     </div>
   );
