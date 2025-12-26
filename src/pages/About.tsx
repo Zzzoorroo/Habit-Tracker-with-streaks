@@ -5,10 +5,10 @@ const About: FC = () => {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-6">About</h1>
-      <p className="text-gray-600 mb-4">
+      <p className="text-gray-600 dark:text-gray-400 mb-4">
         Habit Tracker is a powerful tool to help you build and maintain positive habits.
       </p>
-      <div className="space-y-2 text-gray-600">
+      <div className="space-y-2 text-gray-600 dark:text-gray-400">
         <p><strong>Features:</strong></p>
         <ul className="list-disc list-inside ml-4">
           <li>Track daily habits</li>
