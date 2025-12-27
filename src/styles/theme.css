@@ -1,0 +1,189 @@
+/**
+ * Theme System - CSS Variables (Design Tokens)
+ * 
+ * This file defines CSS custom properties for each theme.
+ * Themes are applied via data-theme attribute on the html element.
+ */
+
+/* ==================== Base/Light Theme ==================== */
+:root,
+[data-theme="light"] {
+  /* Primary Colors */
+  --color-primary: 59 130 246; /* blue-500 */
+  --color-primary-hover: 37 99 235; /* blue-600 */
+  
+  /* Background Colors */
+  --color-bg-primary: 255 255 255; /* white */
+  --color-bg-secondary: 249 250 251; /* gray-50 */
+  --color-bg-tertiary: 243 244 246; /* gray-100 */
+  
+  /* Text Colors */
+  --color-text-primary: 17 24 39; /* gray-900 */
+  --color-text-secondary: 75 85 99; /* gray-600 */
+  --color-text-tertiary: 156 163 175; /* gray-400 */
+  
+  /* Border Colors */
+  --color-border: 229 231 235; /* gray-200 */
+  --color-border-hover: 209 213 219; /* gray-300 */
+  
+  /* Card/Surface */
+  --color-surface: 255 255 255; /* white */
+  --color-surface-hover: 249 250 251; /* gray-50 */
+  
+  /* Accent Colors */
+  --color-success: 34 197 94; /* green-500 */
+  --color-warning: 234 179 8; /* yellow-500 */
+  --color-error: 239 68 68; /* red-500 */
+  --color-info: 59 130 246; /* blue-500 */
+  
+  /* Shadow */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+/* ==================== Dark Theme ==================== */
+[data-theme="dark"] {
+  /* Primary Colors */
+  --color-primary: 96 165 250; /* blue-400 */
+  --color-primary-hover: 59 130 246; /* blue-500 */
+  
+  /* Background Colors */
+  --color-bg-primary: 17 24 39; /* gray-900 */
+  --color-bg-secondary: 31 41 55; /* gray-800 */
+  --color-bg-tertiary: 55 65 81; /* gray-700 */
+  
+  /* Text Colors */
+  --color-text-primary: 243 244 246; /* gray-100 */
+  --color-text-secondary: 209 213 219; /* gray-300 */
+  --color-text-tertiary: 156 163 175; /* gray-400 */
+  
+  /* Border Colors */
+  --color-border: 55 65 81; /* gray-700 */
+  --color-border-hover: 75 85 99; /* gray-600 */
+  
+  /* Card/Surface */
+  --color-surface: 31 41 55; /* gray-800 */
+  --color-surface-hover: 55 65 81; /* gray-700 */
+  
+  /* Accent Colors */
+  --color-success: 74 222 128; /* green-400 */
+  --color-warning: 250 204 21; /* yellow-400 */
+  --color-error: 248 113 113; /* red-400 */
+  --color-info: 96 165 250; /* blue-400 */
+  
+  /* Shadow */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+}
+
+/* ==================== Ocean Theme ==================== */
+[data-theme="ocean"] {
+  /* Primary Colors - Teal/Cyan palette */
+  --color-primary: 20 184 166; /* teal-500 */
+  --color-primary-hover: 13 148 136; /* teal-600 */
+  
+  /* Background Colors - Deep blue-gray tones */
+  --color-bg-primary: 15 23 42; /* slate-900 */
+  --color-bg-secondary: 30 41 59; /* slate-800 */
+  --color-bg-tertiary: 51 65 85; /* slate-700 */
+  
+  /* Text Colors - Light cyan/white tones */
+  --color-text-primary: 240 253 250; /* cyan-50 */
+  --color-text-secondary: 153 246 228; /* cyan-200 */
+  --color-text-tertiary: 94 234 212; /* cyan-300 */
+  
+  /* Border Colors - Cyan-tinted */
+  --color-border: 14 116 144; /* cyan-700 */
+  --color-border-hover: 22 78 99; /* cyan-800 */
+  
+  /* Card/Surface - Slightly lighter than background */
+  --color-surface: 30 41 59; /* slate-800 */
+  --color-surface-hover: 51 65 85; /* slate-700 */
+  
+  /* Accent Colors - Ocean-inspired */
+  --color-success: 52 211 153; /* emerald-400 */
+  --color-warning: 251 191 36; /* amber-400 */
+  --color-error: 248 113 113; /* red-400 */
+  --color-info: 34 211 238; /* cyan-400 */
+  
+  /* Shadow - Deeper shadows for ocean depth */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6);
+}
+
+/* ==================== Utility Classes ==================== */
+/* These classes use the CSS variables defined above */
+
+.bg-primary {
+  background-color: rgb(var(--color-bg-primary));
+}
+
+.bg-secondary {
+  background-color: rgb(var(--color-bg-secondary));
+}
+
+.bg-tertiary {
+  background-color: rgb(var(--color-bg-tertiary));
+}
+
+.bg-surface {
+  background-color: rgb(var(--color-surface));
+}
+
+.text-primary {
+  color: rgb(var(--color-text-primary));
+}
+
+.text-secondary {
+  color: rgb(var(--color-text-secondary));
+}
+
+.text-tertiary {
+  color: rgb(var(--color-text-tertiary));
+}
+
+.border-default {
+  border-color: rgb(var(--color-border));
+}
+
+.theme-primary {
+  color: rgb(var(--color-primary));
+}
+
+.theme-primary-bg {
+  background-color: rgb(var(--color-primary));
+}
+
+.theme-success {
+  color: rgb(var(--color-success));
+}
+
+.theme-warning {
+  color: rgb(var(--color-warning));
+}
+
+.theme-error {
+  color: rgb(var(--color-error));
+}
+
+.theme-info {
+  color: rgb(var(--color-info));
+}
+
+/* Transition for smooth theme changes */
+html,
+body,
+[data-theme] {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Prevent transition on initial load */
+html.no-transition,
+html.no-transition *,
+html.no-transition *::before,
+html.no-transition *::after {
+  transition: none !important;
+}
